@@ -28,12 +28,13 @@ interface DictionaryAPIResponse {
   meanings: Meaning[];
 }
 
-const searchWord = async (word) => {
+const searchWord = async (word: string): Promise<DictionaryAPIResponse[]> => {
   const response = await fetch(`${dictionaryAPI}${word}`);
   if (!response.ok) {
     throw new Error(`Word not found (status ${response.status})`);
   }
-  return response.json();
+  const data: DictionaryAPIResponse[] = await response.json();
+  return data;
 };
 
 const extractFromEntry = (data, key) => {
