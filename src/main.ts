@@ -46,26 +46,28 @@ const extractFromEntry = <K extends keyof DictionaryAPIResponse>(
   }
 };
 
-const clearDefinitionsSection = () => {
-  const definitionsSection = document.getElementById("definitions");
+const clearDefinitionsSection = (): HTMLElement => {
+  const definitionsSection = document.getElementById(
+    "definitions",
+  ) as HTMLElement;
   definitionsSection.innerHTML = "";
   return definitionsSection;
 };
 
-const createDefinitionsHeading = () => {
-  const definitionsHeading = document.createElement("h1");
+const createDefinitionsHeading = (): HTMLElement => {
+  const definitionsHeading: HTMLElement = document.createElement("h1");
   definitionsHeading.classList.add("text-2xl", "font-semibold");
   definitionsHeading.innerText = "Definitions";
   return definitionsHeading;
 };
 
-const createDefinitionDiv = () => {
+const createDefinitionDiv = (): HTMLElement => {
   const definitionDiv = document.createElement("div");
   definitionDiv.classList.add("bg-sky-50");
   return definitionDiv;
 };
 
-const createPartOfSpeechElement = (partOfSpeech) => {
+const createPartOfSpeechElement = (partOfSpeech: string): HTMLElement => {
   const partOfSpeechName = document.createElement("p");
   partOfSpeechName.classList.add(
     "px-4",
@@ -78,8 +80,8 @@ const createPartOfSpeechElement = (partOfSpeech) => {
   return partOfSpeechName;
 };
 
-const createDefinitionsList = () => {
-  const definitionsList = document.createElement("ul");
+const createDefinitionsList = (): HTMLElement => {
+  const definitionsList: HTMLElement = document.createElement("ul");
   definitionsList.classList.add(
     "p-2",
     "ml-6",
@@ -90,19 +92,19 @@ const createDefinitionsList = () => {
   return definitionsList;
 };
 
-const createDefinitionItem = (definitionObj) => {
-  const definitionsItem = document.createElement("li");
+const createDefinitionItem = (definitionObj: Definition): HTMLElement => {
+  const definitionsItem: HTMLElement = document.createElement("li");
   definitionsItem.innerText = definitionObj.definition;
   return definitionsItem;
 };
 
-const displayWordDefinition = (meanings) => {
+const displayWordDefinition = (meanings: Meaning[]): void => {
   const definitionsSection = clearDefinitionsSection();
 
   const definitionsHeading = createDefinitionsHeading();
   definitionsSection.appendChild(definitionsHeading);
 
-  meanings.forEach((meaning) => {
+  meanings.forEach((meaning: Meaning) => {
     const definitionDiv = createDefinitionDiv();
     definitionsSection.appendChild(definitionDiv);
 
@@ -114,7 +116,8 @@ const displayWordDefinition = (meanings) => {
     const definitionsList = createDefinitionsList();
     definitionDiv.appendChild(definitionsList);
 
-    const definitionListItems = definitions.map(createDefinitionItem);
+    const definitionListItems: HTMLElement[] =
+      definitions.map(createDefinitionItem);
     definitionsList.append(...definitionListItems);
   });
 };
