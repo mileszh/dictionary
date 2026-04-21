@@ -98,13 +98,13 @@ const createDefinitionItem = (definitionObj: Definition): HTMLElement => {
   return definitionsItem;
 };
 
-const displayWordDefinition = (meanings: Meaning[]): void => {
+const displayWordDefinition = (meanings: Meaning[] | undefined): void => {
   const definitionsSection = clearDefinitionsSection();
 
   const definitionsHeading = createDefinitionsHeading();
   definitionsSection.appendChild(definitionsHeading);
 
-  meanings.forEach((meaning: Meaning) => {
+  meanings?.forEach((meaning: Meaning) => {
     const definitionDiv = createDefinitionDiv();
     definitionsSection.appendChild(definitionDiv);
 
@@ -123,7 +123,7 @@ const displayWordDefinition = (meanings: Meaning[]): void => {
 };
 
 const createPhoneticsSection = () => {
-  const phoneticsSection = document.getElementById("phonetics");
+  const phoneticsSection = document.getElementById("phonetics") as HTMLElement;
   phoneticsSection.innerHTML = "";
   phoneticsSection.classList.add("flex", "flex-col", "gap-4");
   return phoneticsSection;
@@ -142,7 +142,7 @@ const createPhoneticsDiv = () => {
   return phoneticsDiv;
 };
 
-const createPhoneticElement = (text) => {
+const createPhoneticElement = (text: string) => {
   const phoneticText = document.createElement("p");
   phoneticText.classList.add("px-4", "py-3", "text-white", "bg-stone-700");
   phoneticText.innerText = text;
@@ -150,26 +150,26 @@ const createPhoneticElement = (text) => {
 };
 
 const createAudioControl = () => {
-  const audioControl = document.createElement("audio");
+  const audioControl: HTMLAudioElement = document.createElement("audio");
   audioControl.style = "width: 100%";
   audioControl.setAttribute("controls", "true");
   return audioControl;
 };
 
-const createAudioSource = (audio) => {
-  const source = document.createElement("source");
+const createAudioSource = (audio: string): HTMLSourceElement => {
+  const source: HTMLSourceElement = document.createElement("source");
   source.setAttribute("src", audio);
   source.setAttribute("type", "audio/mpeg");
   return source;
 };
 
-const displayWordPhonetic = (phonetics) => {
+const displayWordPhonetic = (phonetics: Phonetic[] | undefined): void => {
   const phoneticsSection = createPhoneticsSection();
 
   const phoneticsHeading = createPhoneticsHeading();
   phoneticsSection.appendChild(phoneticsHeading);
 
-  phonetics.forEach((phonetic) => {
+  phonetics?.forEach((phonetic: Phonetic) => {
     const { text, audio } = phonetic;
 
     if (!text || !audio) return;
@@ -194,7 +194,7 @@ const displayWordPhonetic = (phonetics) => {
   });
 };
 
-const displayError = (message) => {
+const displayError = (message: string) => {
   const definitionsSection = clearDefinitionsSection();
   const error = document.createElement("p");
   error.classList.add("p-4", "text-red-600", "font-semibold");
@@ -202,10 +202,10 @@ const displayError = (message) => {
   definitionsSection.appendChild(error);
 };
 
-const inputWord = document.getElementById("input");
-const submitBtn = document.getElementById("submit");
+const inputWord = document.getElementById("input") as HTMLInputElement;
+const submitBtn = document.getElementById("submit") as HTMLButtonElement;
 submitBtn.addEventListener("click", async () => {
-  const word = inputWord.value.trim();
+  const word: string = inputWord.value.trim();
   if (!word) return;
 
   try {
